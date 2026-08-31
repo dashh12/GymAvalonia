@@ -1,0 +1,28 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MyAvaloniaApp.Views.EntrenadoresView"
+             Background="#121212">
+
+    <StackPanel HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Spacing="20">
+
+        <TextBlock Text="ENTRENADORES"
+                   FontSize="30"
+                   FontWeight="Bold"
+                   Foreground="#eff1f0"
+                   HorizontalAlignment="Center"/>
+
+        <TextBlock Text="Gestión de entrenadores del gimnasio"
+                   FontSize="16"
+                   Foreground="#888888"
+                   HorizontalAlignment="Center"/>
+
+        <Button Content="Volver al Inicio"
+                Command="{Binding VolverInicioCommand}"
+                Width="180"
+                Height="45"/>
+
+    </StackPanel>
+
+</UserControl>

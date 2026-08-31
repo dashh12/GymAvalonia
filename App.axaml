@@ -1,0 +1,36 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="clr-namespace:MyAvaloniaApp.Views"
+             xmlns:vm="clr-namespace:MyAvaloniaApp.ViewModels"
+             x:Class="MyAvaloniaApp.App"
+             RequestedThemeVariant="Dark">
+
+    <Application.DataTemplates>
+
+        <DataTemplate DataType="vm:LoginViewModel">
+            <views:LoginView />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:InicioViewModel">
+            <views:InicioView />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:MiembrosViewModel">
+            <views:MiembrosView />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:EntrenadoresViewModel">
+        <views:EntrenadoresView />
+        </DataTemplate>
+
+        <DataTemplate DataType="vm:PagosViewModel">
+        <views:PagosView />
+        </DataTemplate>
+
+    </Application.DataTemplates>
+
+    <Application.Styles>
+        <FluentTheme />
+    </Application.Styles>
+
+</Application>

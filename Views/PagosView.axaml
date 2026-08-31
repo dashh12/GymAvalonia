@@ -1,0 +1,28 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MyAvaloniaApp.Views.PagosView"
+             Background="#121212">
+
+    <StackPanel HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Spacing="20">
+
+        <TextBlock Text="PAGOS"
+                   FontSize="30"
+                   FontWeight="Bold"
+                   Foreground="#fcfcfc"
+                   HorizontalAlignment="Center"/>
+
+        <TextBlock Text="Gestión de pagos de los miembros"
+                   FontSize="16"
+                   Foreground="#888888"
+                   HorizontalAlignment="Center"/>
+
+        <Button Content="Volver al Inicio"
+                Command="{Binding VolverInicioCommand}"
+                Width="180"
+                Height="45"/>
+
+    </StackPanel>
+
+</UserControl>

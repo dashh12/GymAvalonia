@@ -1,0 +1,28 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="MyAvaloniaApp.Views.MaquinasView"
+             Background="#121212">
+
+    <Border Padding="25">
+
+        <StackPanel Spacing="20">
+
+            <TextBlock Text="Maquinarias"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Foreground="White"/>
+
+            <TextBlock Text="Tipos de Maquinarias segun el musculo"
+                       Foreground="#e2ede7"
+                       FontSize="18"/>
+
+            <Button Content="Volver al Inicio"
+                    Command="{Binding VolverInicioCommand}"
+                    Width="180"
+                    Height="45"/>
+
+        </StackPanel>
+
+    </Border>
+
+</UserControl>

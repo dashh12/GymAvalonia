@@ -30,4 +30,10 @@ public partial class InicioViewModel : ViewModelBase
        _mainViewModel.CurrentViewModel =
             new PagosViewModel(_mainViewModel);
     }
+    [RelayCommand]
+    private void IrAMaquinas()
+    {
+        _mainViewModel.CurrentViewModel =
+            new MaquinasViewModel(_mainViewModel);
+    }
 }

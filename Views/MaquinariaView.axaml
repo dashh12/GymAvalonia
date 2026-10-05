@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:MyAvaloniaApp.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MyAvaloniaApp.Views.MaquinariaView"
+             x:DataType="vm:MaquinariaViewModel">
+
+	<Design.DataContext>
+		<vm:MaquinariaViewModel />
+	</Design.DataContext>
+
+	<StackPanel Margin="20" Spacing="10">
+
+		<Button Content="← Volver al inicio"
+				Command="{Binding VolverAlInicioCommand}" />
+
+		<TextBlock Text="Maquinaria" FontSize="24" FontWeight="Bold" />
+
+		<!-- Encabezado -->
+		<Grid ColumnDefinitions="*,*" Margin="10,10,10,0">
+			<TextBlock Grid.Column="0" Text="Máquina" FontWeight="Bold" />
+			<TextBlock Grid.Column="1" Text="Músculo que entrena" FontWeight="Bold" />
+		</Grid>
+
+		<!-- Lista -->
+		<ItemsControl ItemsSource="{Binding Maquinas}">
+			<ItemsControl.ItemTemplate>
+				<DataTemplate x:DataType="vm:Maquina">
+					<Border BorderThickness="0,0,0,1" BorderBrush="Gray" Padding="10">
+						<Grid ColumnDefinitions="*,*">
+							<TextBlock Grid.Column="0" Text="{Binding Nombre}" />
+							<TextBlock Grid.Column="1" Text="{Binding Musculo}" />
+						</Grid>
+					</Border>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+
+	</StackPanel>
+</UserControl>

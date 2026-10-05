@@ -27,6 +27,12 @@
         <views:PagosView />
         </DataTemplate>
 
+		<DataTemplate DataType="vm:MaquinariaViewModel">
+			<views:MaquinariaView />
+		</DataTemplate>
+		
+		
+
     </Application.DataTemplates>
 
     <Application.Styles>

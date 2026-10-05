@@ -34,6 +34,6 @@ public partial class InicioViewModel : ViewModelBase
     private void IrAMaquinas()
     {
         _mainViewModel.CurrentViewModel =
-            new MaquinasViewModel(_mainViewModel);
+            new MaquinariaViewModel(_mainViewModel);
     }
 }

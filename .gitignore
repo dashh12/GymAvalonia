@@ -480,3 +480,6 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+/ViewModels/MaquinasViewModel.cs
+/Views/MaquinasView.axaml.cs
+/Views/MaquinasView.axaml

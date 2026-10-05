@@ -51,6 +51,13 @@
                         Width="150"
                         Height="50"/>
 
+				<Button Content="Maquinas"
+                        Command="{Binding IrAMaquinasCommand}"
+                        Width="150"
+                        Height="50"/>
+				
+				
+
             </StackPanel>
 
         </StackPanel>

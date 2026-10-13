@@ -483,3 +483,9 @@ $RECYCLE.BIN/
 /ViewModels/MaquinasViewModel.cs
 /Views/MaquinasView.axaml.cs
 /Views/MaquinasView.axaml
+
+
+# SQLITE database files
+*.db
+*.db-shm
+*.db-wal 

@@ -241,7 +241,7 @@ namespace ApiWeb.Migrations
                             Monto = 65000m
                         });
                 });
-
+            // hola xd
             modelBuilder.Entity("ApiWeb.Models.Rutina", b =>
                 {
                     b.Property<int>("Id")

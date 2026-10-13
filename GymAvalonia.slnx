@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="ApiWeb/ApiWeb.csproj" />
+  <Project Path="MyAvaloniaApp.csproj" />
+</Solution>

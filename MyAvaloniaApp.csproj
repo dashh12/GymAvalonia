@@ -16,5 +16,12 @@
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.20" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
   </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="ApiWeb\**" />
+		<Content Remove="ApiWeb\**" />
+		<EmbeddedResource Remove="ApiWeb\**" />
+		<None Remove="ApiWeb\**" />
+		<AvaloniaXaml Remove="ApiWeb\**" />
+	</ItemGroup>
 
 </Project>

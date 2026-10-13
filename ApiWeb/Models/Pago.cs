@@ -1,5 +1,3 @@
-﻿using ApiWeb.Models;
-
 namespace ApiWeb.Models
 {
     public class Pago

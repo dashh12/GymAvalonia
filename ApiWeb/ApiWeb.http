@@ -1,6 +1,94 @@
 @ApiWeb_HostAddress = http://localhost:5141
 
-GET {{ApiWeb_HostAddress}}/weatherforecast/
-Accept: application/json
+### ===== MIEMBROS =====
+
+### Listar todos
+GET {{ApiWeb_HostAddress}}/api/miembros
+
+### Buscar por texto
+GET {{ApiWeb_HostAddress}}/api/miembros?buscar=pe
+
+### Obtener uno
+GET {{ApiWeb_HostAddress}}/api/miembros/1
+
+### Pagos de un miembro
+GET {{ApiWeb_HostAddress}}/api/miembros/1/pagos
+
+### Crear (201)
+POST {{ApiWeb_HostAddress}}/api/miembros
+Content-Type: application/json
+
+{
+  "nombre": "Ana",
+  "apellido": "Torres",
+  "email": "ana@mail.com",
+  "membresiaId": 1,
+  "rutinaId": 2
+}
+
+### Crear con email repetido (409)
+POST {{ApiWeb_HostAddress}}/api/miembros
+Content-Type: application/json
+
+{
+  "nombre": "Otro",
+  "apellido": "Repetido",
+  "email": "martin@mail.com",
+  "membresiaId": 1
+}
+
+### Crear con email inválido (400)
+POST {{ApiWeb_HostAddress}}/api/miembros
+Content-Type: application/json
+
+{
+  "nombre": "Test",
+  "apellido": "Test",
+  "email": "esto-no-es-un-email",
+  "membresiaId": 1
+}
+
+### Editar (204)
+PUT {{ApiWeb_HostAddress}}/api/miembros/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "nombre": "Martín",
+  "apellido": "Pérez",
+  "email": "martin@mail.com",
+  "membresiaId": 2,
+  "rutinaId": 1
+}
+
+### Eliminar (204)
+DELETE {{ApiWeb_HostAddress}}/api/miembros/3
+
+### Obtener uno inexistente (404)
+GET {{ApiWeb_HostAddress}}/api/miembros/999
+
+### ===== OTRAS TABLAS =====
+
+GET {{ApiWeb_HostAddress}}/api/membresias
 
 ###
+GET {{ApiWeb_HostAddress}}/api/entrenadores
+
+###
+GET {{ApiWeb_HostAddress}}/api/rutinas
+
+###
+GET {{ApiWeb_HostAddress}}/api/pagos
+
+###
+GET {{ApiWeb_HostAddress}}/api/maquinaria
+
+###
+POST {{ApiWeb_HostAddress}}/api/pagos
+Content-Type: application/json
+
+{
+  "fechaPago": "2026-10-14T00:00:00",
+  "monto": 25000,
+  "miembroId": 1
+}

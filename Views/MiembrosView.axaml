@@ -3,26 +3,56 @@
              x:Class="MyAvaloniaApp.Views.MiembrosView"
              Background="#121212">
 
-    <Border Padding="25">
+    <Grid RowDefinitions="Auto,Auto,*" Margin="25">
 
-        <StackPanel Spacing="20">
+        <!-- Título y botón para volver -->
+        <Grid ColumnDefinitions="*,Auto">
+            <TextBlock Text="Miembros" FontSize="24" FontWeight="Bold" Foreground="White"/>
+            <Button Grid.Column="1" Content="Volver al Inicio" Command="{Binding VolverInicioCommand}"/>
+        </Grid>
 
-            <TextBlock Text="Gestión de Miembros"
-                       FontSize="24"
-                       FontWeight="Bold"
-                       Foreground="White"/>
+        <!-- Mensajes de error o de éxito -->
+        <TextBlock Grid.Row="1" Text="{Binding Mensaje}" Foreground="Orange" Margin="0,10"/>
 
-            <TextBlock Text="¡Sesión iniciada con éxito!"
-                       Foreground="#e2ede7"
-                       FontSize="18"/>
+        <Grid Grid.Row="2" ColumnDefinitions="2*,*">
 
-            <Button Content="Volver al Inicio"
-                    Command="{Binding VolverInicioCommand}"
-                    Width="180"
-                    Height="45"/>
+            <!-- Buscador y lista -->
+            <DockPanel Margin="0,0,20,0">
+                <TextBox DockPanel.Dock="Top" Watermark="Buscar..." Text="{Binding Busqueda}" Margin="0,0,0,10"/>
 
-        </StackPanel>
+                <ListBox ItemsSource="{Binding Miembros}" SelectedItem="{Binding Seleccionado}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="5">
+                                    <TextBlock Text="{Binding Nombre}" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding Apellido}" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="{Binding Email}" Foreground="Gray"/>
+                                <TextBlock Text="{Binding Membresia.Tipo}" Foreground="Gray"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
 
-    </Border>
+            <!-- Formulario -->
+            <StackPanel Grid.Column="1" Spacing="10">
+                <TextBox Watermark="Nombre" Text="{Binding Nombre}"/>
+                <TextBox Watermark="Apellido" Text="{Binding Apellido}"/>
+                <TextBox Watermark="Email" Text="{Binding Email}"/>
+                <ComboBox ItemsSource="{Binding Membresias}"
+                          SelectedItem="{Binding MembresiaElegida}"
+                          PlaceholderText="Elegí una membresía"
+                          HorizontalAlignment="Stretch"/>
 
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <Button Content="Guardar" Command="{Binding GuardarCommand}"/>
+                    <Button Content="Nuevo" Command="{Binding NuevoCommand}"/>
+                    <Button Content="Eliminar" Command="{Binding EliminarCommand}"/>
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
 </UserControl>

@@ -1,42 +1,53 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="using:MyAvaloniaApp.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MyAvaloniaApp.Views.MaquinariaView"
-             x:DataType="vm:MaquinariaViewModel">
+             Background="#121212">
 
-	<Design.DataContext>
-		<vm:MaquinariaViewModel />
-	</Design.DataContext>
+    <Grid RowDefinitions="Auto,Auto,*" Margin="25">
 
-	<StackPanel Margin="20" Spacing="10">
+        <!-- Título y botón para volver -->
+        <Grid ColumnDefinitions="*,Auto">
+            <TextBlock Text="Maquinaria" FontSize="24" FontWeight="Bold" Foreground="White"/>
+            <Button Grid.Column="1" Content="Volver al Inicio" Command="{Binding VolverInicioCommand}"/>
+        </Grid>
 
-		<Button Content="← Volver al inicio"
-				Command="{Binding VolverAlInicioCommand}" />
+        <!-- Mensajes de error o de éxito -->
+        <TextBlock Grid.Row="1" Text="{Binding Mensaje}" Foreground="Orange" Margin="0,10"/>
 
-		<TextBlock Text="Maquinaria" FontSize="24" FontWeight="Bold" />
+        <Grid Grid.Row="2" ColumnDefinitions="2*,*">
 
-		<!-- Encabezado -->
-		<Grid ColumnDefinitions="*,*" Margin="10,10,10,0">
-			<TextBlock Grid.Column="0" Text="Máquina" FontWeight="Bold" />
-			<TextBlock Grid.Column="1" Text="Músculo que entrena" FontWeight="Bold" />
-		</Grid>
+            <!-- Buscador y lista -->
+            <DockPanel Margin="0,0,20,0">
+                <TextBox DockPanel.Dock="Top" Watermark="Buscar..." Text="{Binding Busqueda}" Margin="0,0,0,10"/>
 
-		<!-- Lista -->
-		<ItemsControl ItemsSource="{Binding Maquinas}">
-			<ItemsControl.ItemTemplate>
-				<DataTemplate x:DataType="vm:Maquina">
-					<Border BorderThickness="0,0,0,1" BorderBrush="Gray" Padding="10">
-						<Grid ColumnDefinitions="*,*">
-							<TextBlock Grid.Column="0" Text="{Binding Nombre}" />
-							<TextBlock Grid.Column="1" Text="{Binding Musculo}" />
-						</Grid>
-					</Border>
-				</DataTemplate>
-			</ItemsControl.ItemTemplate>
-		</ItemsControl>
+                <ListBox ItemsSource="{Binding Maquinas}" SelectedItem="{Binding Seleccionada}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Nombre}" FontWeight="Bold"/>
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock Text="{Binding Musculo}" Foreground="Gray"/>
+                                    <TextBlock Text="{Binding Estado}" Foreground="Gray"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
 
-	</StackPanel>
+            <!-- Formulario -->
+            <StackPanel Grid.Column="1" Spacing="10">
+                <TextBox Watermark="Nombre" Text="{Binding Nombre}"/>
+                <TextBox Watermark="Músculo que entrena" Text="{Binding Musculo}"/>
+                <ComboBox ItemsSource="{Binding Estados}" SelectedItem="{Binding Estado}" HorizontalAlignment="Stretch"/>
+
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <Button Content="Guardar" Command="{Binding GuardarCommand}"/>
+                    <Button Content="Nuevo" Command="{Binding NuevoCommand}"/>
+                    <Button Content="Eliminar" Command="{Binding EliminarCommand}"/>
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
 </UserControl>

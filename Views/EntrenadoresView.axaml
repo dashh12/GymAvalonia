@@ -3,26 +3,51 @@
              x:Class="MyAvaloniaApp.Views.EntrenadoresView"
              Background="#121212">
 
-    <StackPanel HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Spacing="20">
+    <Grid RowDefinitions="Auto,Auto,*" Margin="25">
 
-        <TextBlock Text="ENTRENADORES"
-                   FontSize="30"
-                   FontWeight="Bold"
-                   Foreground="#eff1f0"
-                   HorizontalAlignment="Center"/>
+        <!-- Título y botón para volver -->
+        <Grid ColumnDefinitions="*,Auto">
+            <TextBlock Text="Entrenadores" FontSize="24" FontWeight="Bold" Foreground="White"/>
+            <Button Grid.Column="1" Content="Volver al Inicio" Command="{Binding VolverInicioCommand}"/>
+        </Grid>
 
-        <TextBlock Text="Gestión de entrenadores del gimnasio"
-                   FontSize="16"
-                   Foreground="#888888"
-                   HorizontalAlignment="Center"/>
+        <!-- Mensajes de error o de éxito -->
+        <TextBlock Grid.Row="1" Text="{Binding Mensaje}" Foreground="Orange" Margin="0,10"/>
 
-        <Button Content="Volver al Inicio"
-                Command="{Binding VolverInicioCommand}"
-                Width="180"
-                Height="45"/>
+        <Grid Grid.Row="2" ColumnDefinitions="2*,*">
 
-    </StackPanel>
+            <!-- Buscador y lista -->
+            <DockPanel Margin="0,0,20,0">
+                <TextBox DockPanel.Dock="Top" Watermark="Buscar..." Text="{Binding Busqueda}" Margin="0,0,0,10"/>
 
+                <ListBox ItemsSource="{Binding Entrenadores}" SelectedItem="{Binding Seleccionado}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="5">
+                                    <TextBlock Text="{Binding Nombre}" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding Apellido}" FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="{Binding Especialidad}" Foreground="Gray"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+
+            <!-- Formulario -->
+            <StackPanel Grid.Column="1" Spacing="10">
+                <TextBox Watermark="Nombre" Text="{Binding Nombre}"/>
+                <TextBox Watermark="Apellido" Text="{Binding Apellido}"/>
+                <TextBox Watermark="Especialidad" Text="{Binding Especialidad}"/>
+
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <Button Content="Guardar" Command="{Binding GuardarCommand}"/>
+                    <Button Content="Nuevo" Command="{Binding NuevoCommand}"/>
+                    <Button Content="Eliminar" Command="{Binding EliminarCommand}"/>
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
 </UserControl>

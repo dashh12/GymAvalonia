@@ -53,9 +53,10 @@ public class AppDbContext : DbContext
 
         // Datos iniciales
         modelBuilder.Entity<Membresia>().HasData(
-            new Membresia { Id = 1, Tipo = "Mensual", Precio = 25000m },
-            new Membresia { Id = 2, Tipo = "Trimestral", Precio = 65000m },
-            new Membresia { Id = 3, Tipo = "Anual", Precio = 230000m });
+            new Membresia { Id = 1, Tipo = "Basico", Precio = 25000 },
+            new Membresia { Id = 2, Tipo = "Estandar", Precio = 45000 },
+            new Membresia { Id = 3, Tipo = "Avanzado", Precio = 80000 },
+            new Membresia { Id = 4, Tipo = "Vip", Precio = 100000 });
 
         modelBuilder.Entity<Entrenador>().HasData(
             new Entrenador { Id = 1, Nombre = "Lucas", Apellido = "Fernández", Especialidad = "Musculación" },

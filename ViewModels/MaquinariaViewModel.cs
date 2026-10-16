@@ -49,7 +49,7 @@ public partial class MaquinariaViewModel : ViewModelBase
         Estado = value.Estado;
     }
 
-    // Consulta LINQ: busca por texto y ordena por nombre
+    //CONSULTAS LINQ
     private void Filtrar()
     {
         var texto = Busqueda.ToLower();

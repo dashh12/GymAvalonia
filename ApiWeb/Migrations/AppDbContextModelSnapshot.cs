@@ -131,19 +131,25 @@ namespace ApiWeb.Migrations
                         {
                             Id = 1,
                             Precio = 25000m,
-                            Tipo = "Mensual"
+                            Tipo = "Basico"
                         },
                         new
                         {
                             Id = 2,
-                            Precio = 65000m,
-                            Tipo = "Trimestral"
+                            Precio = 45000m,
+                            Tipo = "Estandar"
                         },
                         new
                         {
                             Id = 3,
-                            Precio = 230000m,
-                            Tipo = "Anual"
+                            Precio = 80000m,
+                            Tipo = "Avanzado"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Precio = 100000m,
+                            Tipo = "Vip"
                         });
                 });
 
@@ -241,7 +247,7 @@ namespace ApiWeb.Migrations
                             Monto = 65000m
                         });
                 });
-            // hola xd
+
             modelBuilder.Entity("ApiWeb.Models.Rutina", b =>
                 {
                     b.Property<int>("Id")

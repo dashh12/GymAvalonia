@@ -3,26 +3,52 @@
              x:Class="MyAvaloniaApp.Views.PagosView"
              Background="#121212">
 
-    <StackPanel HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Spacing="20">
+	<Grid RowDefinitions="Auto,*" Margin="25">
 
-        <TextBlock Text="PAGOS"
-                   FontSize="30"
-                   FontWeight="Bold"
-                   Foreground="#fcfcfc"
-                   HorizontalAlignment="Center"/>
+		
+		<Grid ColumnDefinitions="*,Auto">
+			<StackPanel>
+				<TextBlock Text="Pagos y Membresías" FontSize="24" FontWeight="Bold" Foreground="White"/>
+				<TextBlock Text="Estos son los planes que ofrece el gimnasio mensuales" Foreground="Gray"/>
+			</StackPanel>
+			<Button Grid.Column="1" Content="Volver al Inicio" Command="{Binding VolverInicioCommand}"/>
+		</Grid>
 
-        <TextBlock Text="Gestión de pagos de los miembros"
-                   FontSize="16"
-                   Foreground="#888888"
-                   HorizontalAlignment="Center"/>
+		<!-- Planes -->
+		<WrapPanel Grid.Row="1" Margin="0,20,0,0">
 
-        <Button Content="Volver al Inicio"
-                Command="{Binding VolverInicioCommand}"
-                Width="180"
-                Height="45"/>
+			<Border Background="#1E1E1E" CornerRadius="8" Padding="20" Margin="0,0,15,15" Width="260">
+				<StackPanel Spacing="8">
+					<TextBlock Text="Basico" FontSize="20" FontWeight="Bold" Foreground="#00E676"/>
+					<TextBlock Text="$25.000" FontSize="18" Foreground="White"/>
+					<TextBlock Text="Pensado para presupuestos ajustados. Incluye acceso completo a la sala de musculacion, zona de peso libre y area de cardio, ideal para quienes entrenan de manera independiente y en horarios determinados." TextWrapping="Wrap" Foreground="LightGray"/>
+				</StackPanel>
+			</Border>
 
-    </StackPanel>
+			<Border Background="#1E1E1E" CornerRadius="8" Padding="20" Margin="0,0,15,15" Width="260">
+				<StackPanel Spacing="8">
+					<TextBlock Text="Estandar" FontSize="20" FontWeight="Bold" Foreground="#00E676"/>
+					<TextBlock Text="$45.000" FontSize="18" Foreground="White"/>
+					<TextBlock Text="El plan para usuario promedio. Ofrece acceso libre e ilimitado a todas las instalaciones de musculacion y cardio sin restricciones de horario." TextWrapping="Wrap" Foreground="LightGray"/>
+				</StackPanel>
+			</Border>
 
+			<Border Background="#1E1E1E" CornerRadius="8" Padding="20" Margin="0,0,15,15" Width="260">
+				<StackPanel Spacing="8">
+					<TextBlock Text="Avanzado" FontSize="20" FontWeight="Bold" Foreground="#00E676"/>
+					<TextBlock Text="$80.000" FontSize="18" Foreground="White"/>
+					<TextBlock Text="Diseñado para un enfoque mas completo en el rendimiento fisico, Agrega a los beneficios anteriores mas rutinas adaptadas, evaluaciones nutricionales periodicas y acceso a las zonas de recuperacion como el sauna." TextWrapping="Wrap" Foreground="LightGray"/>
+				</StackPanel>
+			</Border>
+
+			<Border Background="#1E1E1E" CornerRadius="8" Padding="20" Margin="0,0,15,15" Width="260">
+				<StackPanel Spacing="8">
+					<TextBlock Text="Vip" FontSize="20" FontWeight="Bold" Foreground="#00E676"/>
+					<TextBlock Text="$100.000" FontSize="18" Foreground="White"/>
+					<TextBlock Text="La categoría mas exclusiva. Ofrece atencion preferencial con un entrenador personal dedicado, casillero fijo con lavado de toallas incluido, estacionamiento privado y acceso sin restricciones a cualquier dia de la semana." TextWrapping="Wrap" Foreground="LightGray"/>
+				</StackPanel>
+			</Border>
+
+		</WrapPanel>
+	</Grid>
 </UserControl>

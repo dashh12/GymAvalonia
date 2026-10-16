@@ -46,7 +46,7 @@ public partial class EntrenadoresViewModel : ViewModelBase
         Especialidad = value.Especialidad;
     }
 
-    // Consulta LINQ: busca por texto y ordena por apellido
+    // CONSULTAS LINQ
     private void Filtrar()
     {
         var texto = Busqueda.ToLower();

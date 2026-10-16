@@ -49,7 +49,7 @@ public partial class MiembrosViewModel : ViewModelBase
         MembresiaElegida = Membresias.FirstOrDefault(m => m.Id == value.MembresiaId);
     }
 
-    // Consulta LINQ: busca por nombre, apellido, email o tipo de membresía y ordena por apellido
+    //CONSULTAS LINQ
     private void Filtrar()
     {
         var texto = Busqueda.ToLower();

@@ -16,12 +16,12 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Miembro 1 --- N Pago
-        modelBuilder.Entity<Pago>()
-            .HasOne(p => p.Miembro)
-            .WithMany(m => m.Pagos)
-            .HasForeignKey(p => p.MiembroId)
-            .OnDelete(DeleteBehavior.Cascade);
+        // Pago (método de pago) 1 --- N Miembro (un miembro elige un método de pago, opcional)
+        modelBuilder.Entity<Miembro>()
+            .HasOne(m => m.Pago)
+            .WithMany()
+            .HasForeignKey(m => m.PagoId)
+            .OnDelete(DeleteBehavior.SetNull);
 
         // Membresia 1 --- N Miembro
         modelBuilder.Entity<Miembro>()
@@ -45,7 +45,6 @@ public class AppDbContext : DbContext
             .OnDelete(DeleteBehavior.SetNull);
 
         // Precisión de dinero
-        modelBuilder.Entity<Pago>().Property(p => p.Monto).HasPrecision(10, 2);
         modelBuilder.Entity<Membresia>().Property(m => m.Precio).HasPrecision(10, 2);
 
         // Email único
@@ -72,12 +71,13 @@ public class AppDbContext : DbContext
             new Maquinaria { Id = 2, Nombre = "Polea alta", Musculo = "Espalda", Estado = "Operativa", FechaUltimoMantenimiento = new DateTime(2026, 9, 5) },
             new Maquinaria { Id = 3, Nombre = "Prensa de piernas", Musculo = "Piernas", Estado = "En mantenimiento", FechaUltimoMantenimiento = new DateTime(2026, 10, 2) });
 
-        modelBuilder.Entity<Miembro>().HasData(
-            new Miembro { Id = 1, Nombre = "Martín", Apellido = "Pérez", Email = "martin@mail.com", MembresiaId = 1, RutinaId = 1 },
-            new Miembro { Id = 2, Nombre = "Camila", Apellido = "López", Email = "camila@mail.com", MembresiaId = 2, RutinaId = 3 });
-
+        // Métodos de pago
         modelBuilder.Entity<Pago>().HasData(
-            new Pago { Id = 1, FechaPago = new DateTime(2026, 10, 1), Monto = 25000m, MiembroId = 1 },
-            new Pago { Id = 2, FechaPago = new DateTime(2026, 9, 20), Monto = 65000m, MiembroId = 2 });
+            new Pago { Id = 1, Metodo = "Efectivo" },
+            new Pago { Id = 2, Metodo = "Transferencia" });
+
+        modelBuilder.Entity<Miembro>().HasData(
+            new Miembro { Id = 1, Nombre = "Martín", Apellido = "Pérez", Email = "martin@mail.com", MembresiaId = 1, RutinaId = 1, PagoId = 1 },
+            new Miembro { Id = 2, Nombre = "Camila", Apellido = "López", Email = "camila@mail.com", MembresiaId = 2, RutinaId = 3, PagoId = 2 });
     }
 }

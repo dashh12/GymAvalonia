@@ -23,6 +23,7 @@ namespace ApiWeb.Controllers
             var query = _db.Miembros
                 .Include(m => m.Membresia)
                 .Include(m => m.Rutina)
+                .Include(m => m.Pago)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(buscar))
@@ -44,27 +45,13 @@ namespace ApiWeb.Controllers
             var miembro = await _db.Miembros
                 .Include(m => m.Membresia)
                 .Include(m => m.Rutina)
+                .Include(m => m.Pago)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (miembro is null)
                 return NotFound(new { mensaje = $"No existe el miembro con id {id}" });
 
             return Ok(miembro);
-        }
-
-        // GET api/miembros/5/pagos
-        [HttpGet("{id}/pagos")]
-        public async Task<ActionResult<IEnumerable<Pago>>> GetPagos(int id)
-        {
-            if (!await _db.Miembros.AnyAsync(m => m.Id == id))
-                return NotFound(new { mensaje = $"No existe el miembro con id {id}" });
-
-            var pagos = await _db.Pagos
-                .Where(p => p.MiembroId == id)
-                .OrderByDescending(p => p.FechaPago)
-                .ToListAsync();
-
-            return Ok(pagos);
         }
 
         // POST api/miembros
@@ -77,13 +64,16 @@ namespace ApiWeb.Controllers
             if (miembro.RutinaId.HasValue && !await _db.Rutinas.AnyAsync(r => r.Id == miembro.RutinaId))
                 return BadRequest(new { mensaje = "La rutina indicada no existe" });
 
+            if (miembro.PagoId.HasValue && !await _db.Pagos.AnyAsync(p => p.Id == miembro.PagoId))
+                return BadRequest(new { mensaje = "El método de pago indicado no existe" });
+
             if (await _db.Miembros.AnyAsync(m => m.Email == miembro.Email))
                 return Conflict(new { mensaje = "Ya existe un miembro con ese email" });
 
             miembro.Id = 0;
             miembro.Membresia = null;
             miembro.Rutina = null;
-            miembro.Pagos = null;
+            miembro.Pago = null;
 
             _db.Miembros.Add(miembro);
             await _db.SaveChangesAsync();
@@ -108,6 +98,9 @@ namespace ApiWeb.Controllers
             if (datos.RutinaId.HasValue && !await _db.Rutinas.AnyAsync(r => r.Id == datos.RutinaId))
                 return BadRequest(new { mensaje = "La rutina indicada no existe" });
 
+            if (datos.PagoId.HasValue && !await _db.Pagos.AnyAsync(p => p.Id == datos.PagoId))
+                return BadRequest(new { mensaje = "El método de pago indicado no existe" });
+
             if (await _db.Miembros.AnyAsync(m => m.Email == datos.Email && m.Id != id))
                 return Conflict(new { mensaje = "Ya existe otro miembro con ese email" });
 
@@ -116,6 +109,7 @@ namespace ApiWeb.Controllers
             miembro.Email = datos.Email;
             miembro.MembresiaId = datos.MembresiaId;
             miembro.RutinaId = datos.RutinaId;
+            miembro.PagoId = datos.PagoId;
 
             await _db.SaveChangesAsync();
             return NoContent();

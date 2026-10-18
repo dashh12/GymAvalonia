@@ -1,12 +1,13 @@
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using MyAvaloniaApp.Models;
+using MyAvaloniaApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using MyAvaloniaApp.Models;
-using MyAvaloniaApp.Services;
 
 namespace MyAvaloniaApp.ViewModels;
 
@@ -16,15 +17,29 @@ public partial class MiembrosViewModel : ViewModelBase
     private readonly ApiService _api = new();
     private List<Miembro> _todos = new();
 
-    // Lista que se ve en pantalla y opciones de la lista desplegable
     public ObservableCollection<Miembro> Miembros { get; } = new();
     public ObservableCollection<Membresia> Membresias { get; } = new();
+
+    public ObservableCollection<Pago> MetodosPago { get; } = new()
+    {
+        new Pago { Id = 1, Metodo = "Efectivo" },
+        new Pago { Id = 2, Metodo = "Transferencia" },
+    };
+
+    public ObservableCollection<Rutina> Rutinas { get; } = new()
+    {
+        new Rutina { Id = 1, Descripcion = "Full body 3 días", NivelDificultad = "Principiante", EntrenadorId = 1 },
+        new Rutina { Id = 2, Descripcion = "Pecho y espalda", NivelDificultad = "Intermedio", EntrenadorId = 1 },
+        new Rutina { Id = 3, Descripcion = "Circuito funcional", NivelDificultad = "Intermedio", EntrenadorId = 2 },
+    };
 
     [ObservableProperty] private string _busqueda = "";
     [ObservableProperty] private string _nombre = "";
     [ObservableProperty] private string _apellido = "";
     [ObservableProperty] private string _email = "";
     [ObservableProperty] private Membresia? _membresiaElegida;
+    [ObservableProperty] private Rutina? _rutinaElegida;
+    [ObservableProperty] private Pago? _pagoElegido;
     [ObservableProperty] private string _mensaje = "";
     [ObservableProperty] private Miembro? _seleccionado;
 
@@ -34,10 +49,8 @@ public partial class MiembrosViewModel : ViewModelBase
         _ = Cargar();
     }
 
-    // Cada vez que se escribe en el buscador, se filtra la lista
     partial void OnBusquedaChanged(string value) => Filtrar();
 
-    // Al elegir uno de la lista, sus datos pasan al formulario
     partial void OnSeleccionadoChanged(Miembro? value)
     {
         if (value == null)
@@ -47,9 +60,10 @@ public partial class MiembrosViewModel : ViewModelBase
         Apellido = value.Apellido;
         Email = value.Email;
         MembresiaElegida = Membresias.FirstOrDefault(m => m.Id == value.MembresiaId);
+        RutinaElegida = Rutinas.FirstOrDefault(r => r.Id == value.RutinaId);
+        PagoElegido = MetodosPago.FirstOrDefault(p => p.Id == value.PagoId);
     }
 
-    //CONSULTAS LINQ
     private void Filtrar()
     {
         var texto = Busqueda.ToLower();
@@ -72,7 +86,6 @@ public partial class MiembrosViewModel : ViewModelBase
         Filtrar();
     }
 
-    // Trae las membresías (para la lista desplegable) y los miembros desde la API
     [RelayCommand]
     private async Task Cargar()
     {
@@ -91,7 +104,6 @@ public partial class MiembrosViewModel : ViewModelBase
         }
     }
 
-    // Si hay uno elegido lo modifica, si no crea uno nuevo
     [RelayCommand]
     private async Task Guardar()
     {
@@ -120,7 +132,8 @@ public partial class MiembrosViewModel : ViewModelBase
             Apellido = Apellido,
             Email = Email,
             MembresiaId = MembresiaElegida.Id,
-            RutinaId = Seleccionado?.RutinaId
+            RutinaId = RutinaElegida?.Id,
+            PagoId = PagoElegido?.Id
         };
 
         try
@@ -182,5 +195,7 @@ public partial class MiembrosViewModel : ViewModelBase
         Apellido = "";
         Email = "";
         MembresiaElegida = null;
+        RutinaElegida = null;
+        PagoElegido = null;
     }
 }

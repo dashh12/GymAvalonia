@@ -174,6 +174,9 @@ namespace ApiWeb.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("PagoId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("RutinaId")
                         .HasColumnType("INTEGER");
 
@@ -183,6 +186,8 @@ namespace ApiWeb.Migrations
                         .IsUnique();
 
                     b.HasIndex("MembresiaId");
+
+                    b.HasIndex("PagoId");
 
                     b.HasIndex("RutinaId");
 
@@ -196,6 +201,7 @@ namespace ApiWeb.Migrations
                             Email = "martin@mail.com",
                             MembresiaId = 1,
                             Nombre = "Martín",
+                            PagoId = 1,
                             RutinaId = 1
                         },
                         new
@@ -205,6 +211,7 @@ namespace ApiWeb.Migrations
                             Email = "camila@mail.com",
                             MembresiaId = 2,
                             Nombre = "Camila",
+                            PagoId = 2,
                             RutinaId = 3
                         });
                 });
@@ -215,19 +222,11 @@ namespace ApiWeb.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("FechaPago")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("MiembroId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("Monto")
-                        .HasPrecision(10, 2)
+                    b.Property<string>("Metodo")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MiembroId");
 
                     b.ToTable("Pagos");
 
@@ -235,16 +234,12 @@ namespace ApiWeb.Migrations
                         new
                         {
                             Id = 1,
-                            FechaPago = new DateTime(2026, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MiembroId = 1,
-                            Monto = 25000m
+                            Metodo = "Efectivo"
                         },
                         new
                         {
                             Id = 2,
-                            FechaPago = new DateTime(2026, 9, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MiembroId = 2,
-                            Monto = 65000m
+                            Metodo = "Transferencia"
                         });
                 });
 
@@ -303,6 +298,11 @@ namespace ApiWeb.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("ApiWeb.Models.Pago", "Pago")
+                        .WithMany()
+                        .HasForeignKey("PagoId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("ApiWeb.Models.Rutina", "Rutina")
                         .WithMany("Miembros")
                         .HasForeignKey("RutinaId")
@@ -310,18 +310,9 @@ namespace ApiWeb.Migrations
 
                     b.Navigation("Membresia");
 
+                    b.Navigation("Pago");
+
                     b.Navigation("Rutina");
-                });
-
-            modelBuilder.Entity("ApiWeb.Models.Pago", b =>
-                {
-                    b.HasOne("ApiWeb.Models.Miembro", "Miembro")
-                        .WithMany("Pagos")
-                        .HasForeignKey("MiembroId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Miembro");
                 });
 
             modelBuilder.Entity("ApiWeb.Models.Rutina", b =>
@@ -343,11 +334,6 @@ namespace ApiWeb.Migrations
             modelBuilder.Entity("ApiWeb.Models.Membresia", b =>
                 {
                     b.Navigation("Miembros");
-                });
-
-            modelBuilder.Entity("ApiWeb.Models.Miembro", b =>
-                {
-                    b.Navigation("Pagos");
                 });
 
             modelBuilder.Entity("ApiWeb.Models.Rutina", b =>

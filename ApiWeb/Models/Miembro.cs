@@ -23,6 +23,7 @@ namespace ApiWeb.Models
         public int? RutinaId { get; set; }
         public Rutina? Rutina { get; set; }
 
-        public ICollection<Pago>? Pagos { get; set; }
+        public int? PagoId { get; set; }
+        public Pago? Pago { get; set; }
     }
 }

@@ -24,5 +24,16 @@
 		<None Remove="ApiWeb\**" />
 		<AvaloniaXaml Remove="ApiWeb\**" />
 	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Assets\Musculos\abdomen.png" />
+	  <None Remove="Assets\Musculos\pecho.png" />
+	</ItemGroup>
+	<ItemGroup>
+	  <AvaloniaResource Include="Assets\Musculos\abdomen.png" />
+	  <AvaloniaResource Include="Assets\Musculos\pecho.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<AvaloniaResource Include="Assets\**" />
+	</ItemGroup>
 
 </Project>

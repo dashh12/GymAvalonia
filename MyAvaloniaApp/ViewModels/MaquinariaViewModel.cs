@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MyAvaloniaApp.Models;
@@ -16,11 +17,11 @@ public partial class MaquinariaViewModel : ViewModelBase
     private readonly ApiService _api = new();
     private List<Maquinaria> _todas = new();
 
-    // Opciones de la lista desplegable
+    public string[] Musculos => MusculoImagenes.Musculos;
     public string[] Estados { get; } = { "Operativa", "En mantenimiento", "Fuera de servicio" };
-
-    // Lista que se ve en pantalla
     public ObservableCollection<Maquinaria> Maquinas { get; } = new();
+
+    public Bitmap? ImagenMusculo => MusculoImagenes.Cargar(Musculo);
 
     [ObservableProperty] private string _busqueda = "";
     [ObservableProperty] private string _nombre = "";
@@ -35,21 +36,20 @@ public partial class MaquinariaViewModel : ViewModelBase
         _ = Cargar();
     }
 
-    // Cada vez que se escribe en el buscador, se filtra la lista
     partial void OnBusquedaChanged(string value) => Filtrar();
 
-    // Al elegir una de la lista, sus datos pasan al formulario
+    partial void OnMusculoChanged(string value) => OnPropertyChanged(nameof(ImagenMusculo));
+
     partial void OnSeleccionadaChanged(Maquinaria? value)
     {
         if (value == null)
             return;
 
         Nombre = value.Nombre;
-        Musculo = value.Musculo;
+        Musculo = Musculos.FirstOrDefault(m => m.Equals(value.Musculo, StringComparison.OrdinalIgnoreCase)) ?? value.Musculo;
         Estado = value.Estado;
     }
 
-    //CONSULTAS LINQ
     private void Filtrar()
     {
         var texto = Busqueda.ToLower();
@@ -65,7 +65,6 @@ public partial class MaquinariaViewModel : ViewModelBase
             Maquinas.Add(maquina);
     }
 
-    // Trae las máquinas desde la API
     [RelayCommand]
     private async Task Cargar()
     {
@@ -80,7 +79,6 @@ public partial class MaquinariaViewModel : ViewModelBase
         }
     }
 
-    // Si hay una elegida la modifica, si no crea una nueva
     [RelayCommand]
     private async Task Guardar()
     {

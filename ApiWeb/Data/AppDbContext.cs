@@ -13,6 +13,8 @@ public class AppDbContext : DbContext
     public DbSet<Entrenador> Entrenadores => Set<Entrenador>();
     public DbSet<Rutina> Rutinas => Set<Rutina>();
     public DbSet<Maquinaria> Maquinarias => Set<Maquinaria>();
+    public DbSet<Usuario> Usuarios => Set<Usuario>();
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -49,6 +51,9 @@ public class AppDbContext : DbContext
 
         // Email único
         modelBuilder.Entity<Miembro>().HasIndex(m => m.Email).IsUnique();
+
+        //Usuario unico
+        modelBuilder.Entity<Usuario>().HasIndex(u => u.NombreUsuario).IsUnique();
 
         // Datos iniciales
         modelBuilder.Entity<Membresia>().HasData(

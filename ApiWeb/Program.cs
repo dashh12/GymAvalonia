@@ -1,13 +1,14 @@
 using System.Text.Json.Serialization;
 using ApiWeb.Data;
+using ApiWeb.Models;
 using Microsoft.EntityFrameworkCore;
+using ApiWeb;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("Default")));
 
-// IgnoreCycles evita errores al serializar relaciones (Miembro -> Pagos -> Miembro)
 builder.Services.AddControllers()
     .AddJsonOptions(o =>
         o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
@@ -16,11 +17,21 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Crea/actualiza la base automáticamente aplicando las migraciones al iniciar
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.Migrate();
+
+    // El código de inicialización va AQUÍ ADENTRO:
+    if (!db.Usuarios.Any())
+    {
+        db.Usuarios.Add(new Usuario
+        {
+            NombreUsuario = "gym",
+            ContrasenaHash = Seguridad.Hashear("123")
+        });
+        db.SaveChanges();
+    }
 }
 
 if (app.Environment.IsDevelopment())

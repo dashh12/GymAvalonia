@@ -4,39 +4,34 @@
              xmlns:vm="clr-namespace:MyAvaloniaApp.ViewModels"
              x:Class="MyAvaloniaApp.App"
              RequestedThemeVariant="Dark">
+	<Application.DataTemplates>
+		<DataTemplate DataType="vm:LoginViewModel">
+			<views:LoginView />
+		</DataTemplate>
 
-    <Application.DataTemplates>
+		<!-- Agrega esta línea para la pantalla de registro -->
+		<DataTemplate DataType="vm:RegistroViewModel">
+			<views:RegistroView />
+		</DataTemplate>
 
-        <DataTemplate DataType="vm:LoginViewModel">
-            <views:LoginView />
-        </DataTemplate>
-
-        <DataTemplate DataType="vm:InicioViewModel">
-            <views:InicioView />
-        </DataTemplate>
-
-        <DataTemplate DataType="vm:MiembrosViewModel">
-            <views:MiembrosView />
-        </DataTemplate>
-
-        <DataTemplate DataType="vm:EntrenadoresViewModel">
-        <views:EntrenadoresView />
-        </DataTemplate>
-
-        <DataTemplate DataType="vm:PagosViewModel">
-        <views:PagosView />
-        </DataTemplate>
-
+		<DataTemplate DataType="vm:InicioViewModel">
+			<views:InicioView />
+		</DataTemplate>
+		<DataTemplate DataType="vm:MiembrosViewModel">
+			<views:MiembrosView />
+		</DataTemplate>
+		<DataTemplate DataType="vm:EntrenadoresViewModel">
+			<views:EntrenadoresView />
+		</DataTemplate>
+		<DataTemplate DataType="vm:PagosViewModel">
+			<views:PagosView />
+		</DataTemplate>
 		<DataTemplate DataType="vm:MaquinariaViewModel">
 			<views:MaquinariaView />
 		</DataTemplate>
-		
-		
+	</Application.DataTemplates>
 
-    </Application.DataTemplates>
-
-    <Application.Styles>
-        <FluentTheme />
-    </Application.Styles>
-
+	<Application.Styles>
+		<FluentTheme />
+	</Application.Styles>
 </Application>

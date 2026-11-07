@@ -29,7 +29,7 @@
                          Watermark="Usuario"
                          Margin="0,10,0,0"/>
 
-				<TextBox Text="{Binding Contraseña}"
+				<TextBox Text="{Binding Contrasena}"
                          Watermark="Contraseña"
                          PasswordChar="*"/>
 
@@ -38,11 +38,19 @@
                            TextWrapping="Wrap"
                            HorizontalAlignment="Center"/>
 
-				<Button Content="Iniciar Sesion"
+				<Button Content="Iniciar Sesión"
                         Command="{Binding IniciarSesionCommand}"
                         Background="#00E676"
                         Foreground="#121212"
                         FontWeight="Bold"
+                        Height="40"
+                        CornerRadius="6"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"/>
+
+				<Button Content="Registrarse"
+                        Command="{Binding IrARegistroCommand}"
                         Height="40"
                         CornerRadius="6"
                         HorizontalAlignment="Stretch"

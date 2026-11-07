@@ -1,15 +1,20 @@
+using System;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Tmds.DBus.Protocol;
+using MyAvaloniaApp.Models;
+using MyAvaloniaApp.Services;
+
 
 namespace MyAvaloniaApp.ViewModels;
 
 public partial class LoginViewModel : ViewModelBase
 {
     private readonly MainWindowViewModel _mainViewModel;
+    private readonly ApiService _api = new();
 
     [ObservableProperty] private string _usuario = "";
-    [ObservableProperty] private string _contraseña = "";
+    [ObservableProperty] private string _contrasena = "";
     [ObservableProperty] private string _mensaje = "";
 
     public LoginViewModel(MainWindowViewModel mainViewModel)
@@ -18,20 +23,28 @@ public partial class LoginViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void IniciarSesion()
+    private async Task IniciarSesion()
     {
-        if (string.IsNullOrWhiteSpace(Usuario) || string.IsNullOrWhiteSpace(Contraseña))
+        if (string.IsNullOrWhiteSpace(Usuario) || string.IsNullOrWhiteSpace(Contrasena))
         {
-            Mensaje = "Ingresa usuario y contraseña.";
+            Mensaje = "Ingresá usuario y contraseña.";
             return;
         }
 
-        if (Usuario != "gym" || Contraseña != "123")
+        try
         {
-            Mensaje = "Usuario o contraseña incorrectos.";
-            return;
+            await _api.Crear("api/usuarios/login", new Credenciales { NombreUsuario = Usuario, Contrasena = Contrasena });
+            _mainViewModel.CurrentViewModel = new InicioViewModel(_mainViewModel);
         }
+        catch (Exception ex)
+        {
+            Mensaje = ex.Message;
+        }
+    }
 
-        _mainViewModel.CurrentViewModel = new InicioViewModel(_mainViewModel);
+    [RelayCommand]
+    private void IrARegistro()
+    {
+        _mainViewModel.CurrentViewModel = new RegistroViewModel(_mainViewModel);
     }
 }
